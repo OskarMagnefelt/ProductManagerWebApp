@@ -205,6 +205,31 @@ export const themeSettings = (mode: PaletteMode) => {
 };
 
 // context for color mode
+// export const ColorModeContext = createContext<{
+//   theme: Theme;
+//   toggleColorMode: () => void;
+// }>({
+//   theme: createTheme(themeSettings("dark")), // You can use your default theme here
+//   toggleColorMode: () => {},
+// });
+
+// export const useMode = () => {
+//   const [mode, setMode] = useState<PaletteMode>("dark");
+
+//   const colorMode = useMemo(
+//     () => ({
+//       toggleColorMode: () =>
+//         setMode((prev) => (prev === "light" ? "dark" : "light")),
+//     }),
+//     []
+//   );
+
+//   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+//   return { theme, colorMode };
+// };
+
+// ANDRA GRABBBENS
+
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
@@ -220,6 +245,6 @@ export const useMode = () => {
     []
   );
 
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const theme: any = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
 };
