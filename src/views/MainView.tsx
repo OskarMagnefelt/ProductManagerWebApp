@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import MainMenuOption from "./components/MainMenuOption";
+import MainMenuOption from "../components/MainMenuOption";
 
 const MainView = () => {
   return (
