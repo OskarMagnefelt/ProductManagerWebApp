@@ -26,6 +26,7 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
 
   const onSubmitHandler = (data: ProductToCategoryForm) => {
     onSubmit(data);
+    // console.log(data);
   };
 
   return (

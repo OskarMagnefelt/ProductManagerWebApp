@@ -1,17 +1,12 @@
-import { useTheme } from "@mui/material";
 import React from "react";
+import { useTheme } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { tokens } from "../theme";
-
-interface ProductForm {
-  name: string;
-  sku: string;
-  description: string;
-  price: number;
-}
+import { addProduct } from "../api/Products";
+import { Product } from "../api/Interfaces";
 
 interface AddProductFormProps {
-  onSubmit: (data: ProductForm) => void;
+  onSubmit: (data: Product) => void;
 }
 
 const AddProductForm: React.FC<AddProductFormProps> = ({ onSubmit }) => {
@@ -22,10 +17,12 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onSubmit }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProductForm>();
+  } = useForm<Product>();
 
-  const onSubmitHandler = (data: ProductForm) => {
-    onSubmit(data);
+  const onSubmitHandler = async (data: Product) => {
+    onSubmit(await addProduct(data));
+    // onSubmit(data);
+    // console.log(data);
   };
 
   return (
@@ -65,12 +62,14 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onSubmit }) => {
         <Controller
           name="description"
           control={control}
+          rules={{ required: "Description is required" }}
           render={({ field }) => (
             <div>
               <textarea {...field} />
             </div>
           )}
         />
+        <p>{errors.description?.message}</p>
       </div>
 
       <div>
@@ -86,6 +85,30 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onSubmit }) => {
           )}
         />
         <p>{errors.price?.message}</p>
+      </div>
+
+      <div>
+        <label>Image URL</label>
+        <Controller
+          name="image"
+          control={control}
+          rules={{
+            required: "Image URL is required",
+
+            // Kanske lägger in senare
+
+            // pattern: {
+            //   value: /^https?:\/\/.*\.(jpe?g|png|gif|bmp|svg)$/i, // Example pattern for image URLs
+            //   message: "Invalid image URL",
+            // },
+          }}
+          render={({ field }) => (
+            <div>
+              <input type="text" {...field} />
+            </div>
+          )}
+        />
+        <p>{errors.image?.message}</p>
       </div>
 
       <button
