@@ -9,6 +9,10 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import ControlPointDuplicateOutlinedIcon from "@mui/icons-material/ControlPointDuplicateOutlined";
+import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
+
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -77,12 +81,15 @@ const Sidebar = () => {
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
-                ml="15px"
+                // ml="5px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
                   Product Manager
                 </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                <IconButton
+                  // sx={{ mt: "5px" }}
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                >
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
@@ -101,30 +108,37 @@ const Sidebar = () => {
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
+              title="Home"
+              to="/"
+              icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
               title="Add new product"
               to="/addproduct"
-              icon={<HomeOutlinedIcon />}
+              icon={<AddCircleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Add new category"
               to="/addcategory"
-              icon={<PeopleOutlinedIcon />}
+              icon={<AddCircleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Add product to category"
               to="/addproducttocategory"
-              icon={<ContactsOutlinedIcon />}
+              icon={<ControlPointDuplicateOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List categories"
               to="/listcategories"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<FormatListBulletedOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
