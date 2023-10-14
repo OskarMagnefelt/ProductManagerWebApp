@@ -1,15 +1,9 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid, GridRowIdGetter, GridRowModel } from "@mui/x-data-grid";
-// import { tokens } from "../../theme";
-// import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { Box, useTheme } from "@mui/material";
+import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../api/Products";
-// import Header from "../../components/Header";
 
 const ProductsView = () => {
   const getRowId = (row: GridRowModel) => {
