@@ -1,4 +1,6 @@
-const API_BASE_URL = "https://localhost:8000";
+import { GetProductCategoriesDto, AddProductToCategoryDTO } from "./Interfaces";
+
+const API_BASE_URL = "http://localhost:8000";
 
 // Function to fetch all product categories with associated products
 export async function fetchProductCategories(): Promise<

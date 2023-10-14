@@ -3,7 +3,7 @@ import { Product } from "./Interfaces";
 const API_BASE_URL = "http://localhost:8000";
 
 // Get all products
-export const fetchProducts = () => {
+export const getProducts = () => {
   return fetch(`${API_BASE_URL}/Products`).then((response) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -14,17 +14,28 @@ export const fetchProducts = () => {
 
 // Add a new product
 export const addProduct = async (product: Product): Promise<Product> => {
-  const response = await fetch(`${API_BASE_URL}/Products`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to create the product");
+  try {
+    const response = await fetch("http://localhost:8000/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+
+    if (!response.ok) {
+      // Handle non-2xx HTTP response statuses
+      throw new Error("Failed to create the product");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // Handle errors, e.g., display an error message or log the error
+    console.error("Error:", error);
+    // You can also re-throw the error if needed
+    throw error;
   }
-  return response.json();
 };
 
 // Delete product

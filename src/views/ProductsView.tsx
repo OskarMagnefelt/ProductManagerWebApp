@@ -3,7 +3,7 @@ import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import { fetchProducts } from "../api/Products";
+import { getProducts } from "../api/Products";
 
 const ProductsView = () => {
   const getRowId = (row: GridRowModel) => {
@@ -49,7 +49,7 @@ const ProductsView = () => {
 
   useEffect(() => {
     // Fetch data from your API
-    fetchProducts()
+    getProducts()
       .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data: ", error));
   }, []);

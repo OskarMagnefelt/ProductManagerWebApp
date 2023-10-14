@@ -1,4 +1,6 @@
-const API_BASE_URL = "https://localhost:8000"; // Replace with your actual API base URL
+import { Category, CategoryName } from "./Interfaces";
+
+const API_BASE_URL = "https://localhost:8000";
 
 // Function to fetch all categories
 export async function fetchCategories(): Promise<CategoryName[]> {
