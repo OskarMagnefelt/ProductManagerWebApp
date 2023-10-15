@@ -3,7 +3,11 @@ import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import { getProducts } from "../api/Products";
+import {
+  deleteProductBySKU,
+  getProducts,
+  updateProductBySKU,
+} from "../api/Products";
 
 const ProductsView = () => {
   const getRowId = (row: GridRowModel) => {
@@ -13,14 +17,29 @@ const ProductsView = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const handleEditClick = (id: any) => {
-    // Implement edit functionality here, e.g., navigate to the edit page with the selected ID.
-    console.log(`Edit clicked for ID: ${id}`);
-  };
+  // const handleEditClick = (sku: string) => {
+  //   // Call the updateProductBySKU method with the SKU.
+  //   updateProductBySKU(sku, updatedProductData)
+  //     .then(() => {
+  //       // Handle successful update, e.g., show a success message.
+  //     })
+  //     .catch((error) => {
+  //       // Handle errors, e.g., display an error message.
+  //       console.error("Error updating product:", error);
+  //     });
+  // };
 
-  const handleDeleteClick = (id: any) => {
-    // Implement delete functionality here, e.g., show a confirmation dialog and delete the item.
-    console.log(`Delete clicked for ID: ${id}`);
+  const handleDeleteClick = (sku: string) => {
+    // Call the deleteProductBySKU method with the SKU.
+    deleteProductBySKU(sku)
+      .then(() => {
+        console.log(`Product with ${sku} successfully deleted`);
+        // Handle successful deletion, e.g., update the UI to remove the deleted product.
+      })
+      .catch((error) => {
+        // Handle errors, e.g., display an error message.
+        console.error("Error deleting product:", error);
+      });
   };
 
   const columns = [
@@ -60,22 +79,22 @@ const ProductsView = () => {
       flex: 1,
       renderCell: (params: any) => (
         <div>
-          <Button
+          {/* <Button
             // variant="outlined"
             variant="contained"
-            onClick={() => handleEditClick(params.row.id)} // Implement edit functionality
+            onClick={() => handleEditClick(params.row.sku)} // Implement edit functionality
             style={{
               marginRight: "8px",
               backgroundColor: colors.greenAccent[600],
             }}
           >
             Edit
-          </Button>
+          </Button> */}
           <Button
             // variant="outlined"
             variant="contained"
             // variant="text"
-            onClick={() => handleDeleteClick(params.row.id)}
+            onClick={() => handleDeleteClick(params.row.sku)}
             style={{
               backgroundColor: colors.redAccent[500],
             }}
