@@ -1,6 +1,6 @@
 import { Product } from "./Interfaces";
 
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "https://localhost:8000";
 
 // Get all products
 export const getProducts = () => {
@@ -15,7 +15,7 @@ export const getProducts = () => {
 // Add a new product
 export const addProduct = async (product: Product): Promise<Product> => {
   try {
-    const response = await fetch("http://localhost:8000/products", {
+    const response = await fetch(`${API_BASE_URL}/Products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

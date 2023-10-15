@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/Header";
@@ -12,7 +12,18 @@ const ProductsView = () => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const columns: any = [
+
+  const handleEditClick = (id: any) => {
+    // Implement edit functionality here, e.g., navigate to the edit page with the selected ID.
+    console.log(`Edit clicked for ID: ${id}`);
+  };
+
+  const handleDeleteClick = (id: any) => {
+    // Implement delete functionality here, e.g., show a confirmation dialog and delete the item.
+    console.log(`Delete clicked for ID: ${id}`);
+  };
+
+  const columns = [
     // { field: "id", headerName: "ID" },
     {
       field: "name",
@@ -43,12 +54,43 @@ const ProductsView = () => {
       headerName: "Price",
       flex: 1,
     },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      renderCell: (params: any) => (
+        <div>
+          <Button
+            // variant="outlined"
+            variant="contained"
+            onClick={() => handleEditClick(params.row.id)} // Implement edit functionality
+            style={{
+              marginRight: "8px",
+              backgroundColor: colors.greenAccent[600],
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            // variant="outlined"
+            variant="contained"
+            // variant="text"
+            onClick={() => handleDeleteClick(params.row.id)}
+            style={{
+              backgroundColor: colors.redAccent[500],
+            }}
+          >
+            Delete
+          </Button>{" "}
+          {/* Implement delete functionality */}
+        </div>
+      ),
+    },
   ];
 
-  const [data, setData] = useState([]); // State to store fetched data
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Fetch data from your API
     getProducts()
       .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data: ", error));
