@@ -17,38 +17,11 @@ const ProductsView = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  // const handleEditClick = (sku: string) => {
-  //   // Call the updateProductBySKU method with the SKU.
-  //   updateProductBySKU(sku, updatedProductData)
-  //     .then(() => {
-  //       // Handle successful update, e.g., show a success message.
-  //     })
-  //     .catch((error) => {
-  //       // Handle errors, e.g., display an error message.
-  //       console.error("Error updating product:", error);
-  //     });
-  // };
-
-  // const handleDeleteClick = (sku: string) => {
-  //   // Call the deleteProductBySKU method with the SKU.
-  //   deleteProductBySKU(sku)
-  //     .then(() => {
-  //       console.log(`Product with ${sku} successfully deleted`);
-  //       // Handle successful deletion, e.g., update the UI to remove the deleted product.
-  //     })
-  //     .catch((error) => {
-  //       // Handle errors, e.g., display an error message.
-  //       console.error("Error deleting product:", error);
-  //     });
-  // };
-
   const columns = [
-    // { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
-      // cellClassName: "name-column--cell",
     },
     {
       field: "sku",

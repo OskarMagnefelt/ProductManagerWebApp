@@ -70,3 +70,37 @@ export const updateProductBySKU = async (
     throw new Error("Failed to update the product");
   }
 };
+
+// Search for products by SKU
+// export const searchProductsBySKU = async (sku: string): Promise<Product> => {
+//   try {
+//     const response = await fetch(`${API_BASE_URL}/Products?sku=${sku}`);
+//     if (!response.ok) {
+//       throw new Error("Network response was not ok");
+//     }
+
+//     const data = await response.json();
+//     console.log("From API file");
+//     console.log(data);
+//     return data;
+//   } catch (error) {
+//     console.error("Error:", error);
+//     throw error;
+//   }
+// };
+
+export const searchProductBySKU = async (
+  sku: string
+): Promise<Product | null> => {
+  const response = await fetch(`${API_BASE_URL}/Products?sku=${sku}`);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const data = await response.json();
+  if (Array.isArray(data) && data.length > 0) {
+    return data[0]; // Return the first (and presumably only) result
+  } else {
+    return null; // Return null if no results were found
+  }
+};

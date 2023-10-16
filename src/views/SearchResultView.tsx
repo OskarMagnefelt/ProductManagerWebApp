@@ -5,10 +5,15 @@ import Header from "../components/Header";
 import AddCategoryForm from "../components/AddCategoryForm";
 import AddProductToCategoryForm from "../components/AddProductToCategoryForm";
 import { deleteProductBySKU, updateProductBySKU } from "../api/Products";
+import { Product } from "../api/Interfaces";
 
-const SearchResultView = () => {
+const SearchResultView = ({ searchResult }: any) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  console.log("From SearchResultView file");
+  console.log(searchResult);
+
+  //   const product = searchResult.find((x: Product) => x.sku === searchResult.sku);
 
   const handleEditClick = (sku: string) => {
     // // Call the updateProductBySKU method with the SKU.
@@ -34,12 +39,6 @@ const SearchResultView = () => {
         console.error("Error deleting product:", error);
       });
   };
-
-  const handleSearchResultView = (data: any) => {
-    // Handle the form submission here, for example, send the data to your API.
-    console.log(data);
-  };
-
   return (
     <div>
       <Box m="20px">
@@ -49,15 +48,16 @@ const SearchResultView = () => {
             backgroundColor: colors.primary[400],
             // backgroundColor: "#1F2A40",
             color: colors.greenAccent[400],
-            borderRadius: "10px",
+            // borderRadius: "10px",
             width: "300px",
           }}
         >
-          <CardContent>Name</CardContent>
-          <CardContent>SKU</CardContent>
-          <CardContent>Description</CardContent>
-          <CardContent>Image</CardContent>
-          <CardContent>Price</CardContent>
+          {/* <CardContent>{searchResult[0]}</CardContent> */}
+          <CardContent>{`Name ${searchResult.name}`}</CardContent>
+          <CardContent>{`SKU ${searchResult.sku}`}</CardContent>
+          <CardContent>{`Description ${searchResult.description}`}</CardContent>
+          <CardContent>{`Image ${searchResult.image}`}</CardContent>
+          <CardContent>{`Price ${searchResult.price}`}</CardContent>
           <CardContent
             style={{
               display: "flex",
@@ -81,7 +81,7 @@ const SearchResultView = () => {
               // variant="outlined"
               variant="contained"
               // variant="text"
-              //   onClick={() => handleDeleteClick(product.sku)}
+              onClick={() => handleDeleteClick(searchResult.sku)}
               style={{
                 backgroundColor: colors.redAccent[500],
               }}
