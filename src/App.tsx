@@ -8,6 +8,7 @@ import ListCategoriesView from "./views/ListCategoriesView";
 import AddCategoryView from "./views/AddCategoryView";
 import AddProductView from "./views/AddProductView";
 import AddProductToCategory from "./views/AddProductToCategory";
+import SearchResultView from "./views/SearchResultView";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -24,6 +25,7 @@ function App() {
               <Route path="/" element={<ProductsView />}></Route>
               <Route path="/addproduct" element={<AddProductView />} />
               <Route path="/addcategory" element={<AddCategoryView />} />
+              <Route path="/searchresult" element={<SearchResultView />} />
               <Route
                 path="/addproducttocategory"
                 element={<AddProductToCategory />}

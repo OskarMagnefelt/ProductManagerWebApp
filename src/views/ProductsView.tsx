@@ -29,18 +29,18 @@ const ProductsView = () => {
   //     });
   // };
 
-  const handleDeleteClick = (sku: string) => {
-    // Call the deleteProductBySKU method with the SKU.
-    deleteProductBySKU(sku)
-      .then(() => {
-        console.log(`Product with ${sku} successfully deleted`);
-        // Handle successful deletion, e.g., update the UI to remove the deleted product.
-      })
-      .catch((error) => {
-        // Handle errors, e.g., display an error message.
-        console.error("Error deleting product:", error);
-      });
-  };
+  // const handleDeleteClick = (sku: string) => {
+  //   // Call the deleteProductBySKU method with the SKU.
+  //   deleteProductBySKU(sku)
+  //     .then(() => {
+  //       console.log(`Product with ${sku} successfully deleted`);
+  //       // Handle successful deletion, e.g., update the UI to remove the deleted product.
+  //     })
+  //     .catch((error) => {
+  //       // Handle errors, e.g., display an error message.
+  //       console.error("Error deleting product:", error);
+  //     });
+  // };
 
   const columns = [
     // { field: "id", headerName: "ID" },
@@ -48,15 +48,12 @@ const ProductsView = () => {
       field: "name",
       headerName: "Name",
       flex: 1,
-      cellClassName: "name-column--cell",
+      // cellClassName: "name-column--cell",
     },
     {
       field: "sku",
       headerName: "SKU",
       flex: 1,
-      // type: "string",
-      // headerAlign: "left",
-      // align: "left",
     },
     {
       field: "description",
@@ -72,38 +69,6 @@ const ProductsView = () => {
       field: "price",
       headerName: "Price",
       flex: 1,
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      flex: 1,
-      renderCell: (params: any) => (
-        <div>
-          {/* <Button
-            // variant="outlined"
-            variant="contained"
-            onClick={() => handleEditClick(params.row.sku)} // Implement edit functionality
-            style={{
-              marginRight: "8px",
-              backgroundColor: colors.greenAccent[600],
-            }}
-          >
-            Edit
-          </Button> */}
-          <Button
-            // variant="outlined"
-            variant="contained"
-            // variant="text"
-            onClick={() => handleDeleteClick(params.row.sku)}
-            style={{
-              backgroundColor: colors.redAccent[500],
-            }}
-          >
-            Delete
-          </Button>{" "}
-          {/* Implement delete functionality */}
-        </div>
-      ),
     },
   ];
 
