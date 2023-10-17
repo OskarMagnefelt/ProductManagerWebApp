@@ -89,18 +89,12 @@ export const updateProductBySKU = async (
 //   }
 // };
 
-export const searchProductBySKU = async (
-  sku: string
-): Promise<Product | null> => {
+export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
   const response = await fetch(`${API_BASE_URL}/Products?sku=${sku}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
 
   const data = await response.json();
-  if (Array.isArray(data) && data.length > 0) {
-    return data[0]; // Return the first (and presumably only) result
-  } else {
-    return null; // Return null if no results were found
-  }
+  return data; // Always return an array, even if it's empty
 };

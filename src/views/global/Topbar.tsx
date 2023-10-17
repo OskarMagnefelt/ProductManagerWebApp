@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, TextField, useTheme } from "@mui/material";
 import { ColorModeContext, tokens } from "../../theme";
 import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -18,6 +18,7 @@ const Topbar = ({ onSearch }: any) => {
   const handleSearch = () => {
     // Call the onSearch function and pass the searchValue as a parameter
     onSearch(searchValue);
+    setSearchValue("");
   };
 
   return (

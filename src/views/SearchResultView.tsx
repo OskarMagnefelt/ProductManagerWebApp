@@ -5,15 +5,15 @@ import Header from "../components/Header";
 import AddCategoryForm from "../components/AddCategoryForm";
 import AddProductToCategoryForm from "../components/AddProductToCategoryForm";
 import { deleteProductBySKU, updateProductBySKU } from "../api/Products";
-import { Product } from "../api/Interfaces";
+import { useNavigate } from "react-router-dom";
 
 const SearchResultView = ({ searchResult }: any) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const navigate = useNavigate();
   console.log("From SearchResultView file");
   console.log(searchResult);
-
-  //   const product = searchResult.find((x: Product) => x.sku === searchResult.sku);
 
   const handleEditClick = (sku: string) => {
     // // Call the updateProductBySKU method with the SKU.
@@ -32,10 +32,9 @@ const SearchResultView = ({ searchResult }: any) => {
     deleteProductBySKU(sku)
       .then(() => {
         console.log(`Product with ${sku} successfully deleted`);
-        // Handle successful deletion, e.g., update the UI to remove the deleted product.
+        navigate("https://localhost:8000/searchresultview");
       })
       .catch((error) => {
-        // Handle errors, e.g., display an error message.
         console.error("Error deleting product:", error);
       });
   };
@@ -46,18 +45,32 @@ const SearchResultView = ({ searchResult }: any) => {
         <Card
           sx={{
             backgroundColor: colors.primary[400],
-            // backgroundColor: "#1F2A40",
-            color: colors.greenAccent[400],
-            // borderRadius: "10px",
-            width: "300px",
+            width: "250px",
           }}
         >
-          {/* <CardContent>{searchResult[0]}</CardContent> */}
-          <CardContent>{`Name ${searchResult.name}`}</CardContent>
-          <CardContent>{`SKU ${searchResult.sku}`}</CardContent>
-          <CardContent>{`Description ${searchResult.description}`}</CardContent>
-          <CardContent>{`Image ${searchResult.image}`}</CardContent>
-          <CardContent>{`Price ${searchResult.price}`}</CardContent>
+          <CardContent>
+            <span style={{ color: colors.greenAccent[400] }}>Name:</span>{" "}
+            {searchResult.name}
+          </CardContent>
+          <CardContent>
+            <span style={{ color: colors.greenAccent[400] }}>SKU:</span>{" "}
+            {searchResult.sku}
+          </CardContent>
+          <CardContent>
+            <span style={{ color: colors.greenAccent[400] }}>Description:</span>{" "}
+            {searchResult.description}
+          </CardContent>
+          <CardContent>
+            <span style={{ color: colors.greenAccent[400] }}>Image:</span>{" "}
+            {searchResult.image}
+          </CardContent>
+          <CardContent>
+            <span style={{ color: colors.greenAccent[400] }}>
+              searchResult:
+            </span>{" "}
+            {searchResult.price}
+          </CardContent>
+
           <CardContent
             style={{
               display: "flex",

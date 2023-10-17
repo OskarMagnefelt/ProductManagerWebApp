@@ -9,22 +9,23 @@ import AddCategoryView from "./views/AddCategoryView";
 import AddProductView from "./views/AddProductView";
 import AddProductToCategory from "./views/AddProductToCategory";
 import SearchResultView from "./views/SearchResultView";
-import { searchProductBySKU } from "./api/Products";
-import React from "react";
+import { searchProductsBySKU } from "./api/Products";
+import React, { useState } from "react";
 import { Product } from "./api/Interfaces";
 
 function App() {
   const [theme, colorMode] = useMode();
   const navigate = useNavigate();
-  const [searchResult, setSearchResult] = React.useState<any>(null); // Define searchResult state
+  const [searchResult, setSearchResult] = useState<any>(""); // Define searchResult state
 
   const handleSearch = async (sku: string) => {
     try {
-      const result = await searchProductBySKU(sku);
-      setSearchResult(result); // Set the search result in state
+      const result = await searchProductsBySKU(sku);
+      const product = result.find((x) => x.sku === sku);
+      setSearchResult(product); // Set the search result in state
       navigate("/searchresult");
       console.log("From App file");
-      console.log(result);
+      console.log(searchResult);
     } catch (error) {
       console.error("Search error:", error);
       // Handle errors, e.g., display an error message to the user
