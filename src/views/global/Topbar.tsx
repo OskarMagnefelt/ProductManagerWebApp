@@ -17,14 +17,12 @@ const Topbar = ({ onSearch }: any) => {
 
   const handleSearch = () => {
     if (searchValue === "") return;
-    // Call the onSearch function and pass the searchValue as a parameter
     onSearch(searchValue);
     setSearchValue("");
   };
 
   const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
-      // Trigger search when the "Enter" key is pressed
       handleSearch();
     }
   };

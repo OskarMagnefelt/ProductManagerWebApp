@@ -10,22 +10,21 @@ import AddProductView from "./views/AddProductView";
 import AddProductToCategory from "./views/AddProductToCategory";
 import SearchResultView from "./views/SearchResultView";
 import { searchProductsBySKU } from "./api/Products";
-import React, { useState } from "react";
-import { Product } from "./api/Interfaces";
+import { useState } from "react";
 
 function App() {
   const [theme, colorMode] = useMode();
   const navigate = useNavigate();
-  const [searchResult, setSearchResult] = useState<any>(""); // Define searchResult state
+  const [searchResult, setSearchResult] = useState<any>("");
 
   const handleSearch = async (sku: string) => {
-    const result = await searchProductsBySKU(sku.toUpperCase());
+    const result = await searchProductsBySKU(sku);
 
     const product = result.find(
       (x) => x.sku.toUpperCase() === sku.toUpperCase()
     );
     if (product) {
-      setSearchResult(product); // Set the search result in state
+      setSearchResult(product);
       navigate("/searchresult");
     } else {
       alert("SKU is not registered");
@@ -48,7 +47,7 @@ function App() {
               <Route path="/addcategory" element={<AddCategoryView />} />
               <Route
                 path="/searchresult"
-                element={<SearchResultView searchResult={searchResult} />} // Pass the searchResult
+                element={<SearchResultView searchResult={searchResult} />}
               />
               <Route
                 path="/addproducttocategory"
