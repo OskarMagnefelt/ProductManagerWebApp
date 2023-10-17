@@ -16,8 +16,9 @@ const Topbar = ({ onSearch }: any) => {
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = () => {
+    if (searchValue === "") return;
     // Call the onSearch function and pass the searchValue as a parameter
-    onSearch(searchValue);
+    onSearch(searchValue.toUpperCase());
     setSearchValue("");
   };
 

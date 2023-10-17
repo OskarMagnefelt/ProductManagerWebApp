@@ -20,8 +20,10 @@ function App() {
 
   const handleSearch = async (sku: string) => {
     try {
-      const result = await searchProductsBySKU(sku);
-      const product = result.find((x) => x.sku === sku);
+      const result = await searchProductsBySKU(sku.toUpperCase());
+      const product = result.find(
+        (x) => x.sku.toUpperCase() === sku.toUpperCase()
+      );
       setSearchResult(product); // Set the search result in state
       navigate("/searchresult");
       console.log("From App file");

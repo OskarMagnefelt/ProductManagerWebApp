@@ -21,8 +21,6 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onSubmit }) => {
 
   const onSubmitHandler = async (data: Product) => {
     onSubmit(await addProduct(data));
-    // onSubmit(data);
-    // console.log(data);
   };
 
   return (

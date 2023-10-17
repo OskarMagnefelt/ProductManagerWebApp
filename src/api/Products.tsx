@@ -89,12 +89,32 @@ export const updateProductBySKU = async (
 //   }
 // };
 
+// export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
+//   const response = await fetch(
+//     `${API_BASE_URL}/Products?sku=${sku.toLowerCase()}`
+//   );
+//   if (!response.ok) {
+//     throw new Error("Network response was not ok");
+//   }
+
+//   const data = await response.json();
+//   return data; // Always return an array, even if it's empty
+// };
+
 export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
-  const response = await fetch(`${API_BASE_URL}/Products?sku=${sku}`);
+  sku = sku.toUpperCase(); // Convert the search input to lowercase
+
+  const response = await fetch(`${API_BASE_URL}/Products`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
 
   const data = await response.json();
-  return data; // Always return an array, even if it's empty
+
+  // Filter the data array to find products with matching SKU (case-insensitive)
+  const matchingProducts = data.filter(
+    (product: any) => product.sku.toUpperCase() === sku.toUpperCase()
+  );
+
+  return matchingProducts;
 };

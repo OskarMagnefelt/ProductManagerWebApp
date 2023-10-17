@@ -6,6 +6,7 @@ import AddCategoryForm from "../components/AddCategoryForm";
 import AddProductToCategoryForm from "../components/AddProductToCategoryForm";
 import { deleteProductBySKU, updateProductBySKU } from "../api/Products";
 import { useNavigate } from "react-router-dom";
+import { Product } from "../api/Interfaces";
 
 const SearchResultView = ({ searchResult }: any) => {
   const theme = useTheme();
