@@ -11,16 +11,21 @@ import Header from "../components/Header";
 import { tokens } from "../theme";
 import { Product } from "../api/Interfaces";
 import { updateProductBySKU } from "../api/Products";
+import { useNavigate } from "react-router-dom";
 
 const EditProductView = ({ searchResult }: any) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const navigate = useNavigate();
+
+  const [productEditedMessage, setProductEditedMessage] = useState(false);
+
   const [name, setName] = useState("");
   //   const [sku, setSku] = useState(searchResult.sku);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<number>(1);
 
   const handleUpdateClick = () => {
     const updatedProductData: Product = {
@@ -34,8 +39,11 @@ const EditProductView = ({ searchResult }: any) => {
     // Call the API to update the product
     updateProductBySKU(searchResult.sku, updatedProductData)
       .then(() => {
-        // Handle successful update, e.g., show a success message.
-        // Redirect to a success page or display a message.
+        setProductEditedMessage(true);
+        setTimeout(() => {
+          setProductEditedMessage(false);
+          navigate("/");
+        }, 2000);
       })
       .catch((error) => {
         // Handle errors, e.g., display an error message.
@@ -156,6 +164,11 @@ const EditProductView = ({ searchResult }: any) => {
             </Button>
           </CardContent>
         </Card>
+        {productEditedMessage && (
+          <div style={{ color: colors.greenAccent[400], marginTop: "1rem" }}>
+            Product updated...
+          </div>
+        )}
       </Box>
     </div>
   );
