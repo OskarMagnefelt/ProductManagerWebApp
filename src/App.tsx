@@ -11,6 +11,7 @@ import AddProductToCategory from "./views/AddProductToCategory";
 import SearchResultView from "./views/SearchResultView";
 import { searchProductsBySKU } from "./api/Products";
 import { useState } from "react";
+import EditProductView from "./views/EditProductView";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -48,6 +49,10 @@ function App() {
               <Route
                 path="/searchresult"
                 element={<SearchResultView searchResult={searchResult} />}
+              />
+              <Route
+                path="/editproduct"
+                element={<EditProductView searchResult={searchResult} />}
               />
               <Route
                 path="/addproducttocategory"

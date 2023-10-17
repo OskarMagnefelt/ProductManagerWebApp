@@ -86,7 +86,7 @@ const ProductsView = () => {
         }}
       >
         <DataGrid
-          checkboxSelection
+          // checkboxSelection
           rows={data}
           columns={columns}
           getRowId={getRowId}
