@@ -13,8 +13,6 @@ const SearchResultView = ({ searchResult }: any) => {
   const colors = tokens(theme.palette.mode);
 
   const navigate = useNavigate();
-  console.log("From SearchResultView file");
-  console.log(searchResult);
 
   const handleEditClick = (sku: string) => {
     // // Call the updateProductBySKU method with the SKU.
@@ -29,11 +27,10 @@ const SearchResultView = ({ searchResult }: any) => {
   };
 
   const handleDeleteClick = (sku: string) => {
-    // Call the deleteProductBySKU method with the SKU.
     deleteProductBySKU(sku)
       .then(() => {
         console.log(`Product with ${sku} successfully deleted`);
-        navigate("https://localhost:8000/searchresultview");
+        navigate("/searchresultview");
       })
       .catch((error) => {
         console.error("Error deleting product:", error);
@@ -81,20 +78,16 @@ const SearchResultView = ({ searchResult }: any) => {
             }}
           >
             <Button
-              // variant="outlined"
               variant="contained"
               //   onClick={() => handleEditClick(product.sku)}
               style={{
-                // marginRight: "8px",
                 backgroundColor: colors.greenAccent[600],
               }}
             >
               Edit
             </Button>
             <Button
-              // variant="outlined"
               variant="contained"
-              // variant="text"
               onClick={() => handleDeleteClick(searchResult.sku)}
               style={{
                 backgroundColor: colors.redAccent[500],

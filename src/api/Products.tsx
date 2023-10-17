@@ -24,16 +24,13 @@ export const addProduct = async (product: Product): Promise<Product> => {
     });
 
     if (!response.ok) {
-      // Handle non-2xx HTTP response statuses
       throw new Error("Failed to create the product");
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
-    // Handle errors, e.g., display an error message or log the error
     console.error("Error:", error);
-    // You can also re-throw the error if needed
     throw error;
   }
 };
@@ -71,24 +68,7 @@ export const updateProductBySKU = async (
   }
 };
 
-// Search for products by SKU
-// export const searchProductsBySKU = async (sku: string): Promise<Product> => {
-//   try {
-//     const response = await fetch(`${API_BASE_URL}/Products?sku=${sku}`);
-//     if (!response.ok) {
-//       throw new Error("Network response was not ok");
-//     }
-
-//     const data = await response.json();
-//     console.log("From API file");
-//     console.log(data);
-//     return data;
-//   } catch (error) {
-//     console.error("Error:", error);
-//     throw error;
-//   }
-// };
-
+// Search products by sku
 export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
   const response = await fetch(
     `${API_BASE_URL}/Products?sku=${sku.toLowerCase()}`
@@ -98,23 +78,5 @@ export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
   }
 
   const data = await response.json();
-  return data; // Always return an array, even if it's empty
+  return data;
 };
-
-// export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
-//   sku = sku.toUpperCase(); // Convert the search input to lowercase
-
-//   const response = await fetch(`${API_BASE_URL}/Products`);
-//   if (!response.ok) {
-//     throw new Error("Network response was not ok");
-//   }
-
-//   const data = await response.json();
-
-//   // Filter the data array to find products with matching SKU (case-insensitive)
-//   const matchingProducts = data.filter(
-//     (product: any) => product.sku() === sku.toUpperCase()
-//   );
-
-//   return matchingProducts;
-// };
