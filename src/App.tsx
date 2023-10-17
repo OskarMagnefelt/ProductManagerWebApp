@@ -19,19 +19,19 @@ function App() {
   const [searchResult, setSearchResult] = useState<any>(""); // Define searchResult state
 
   const handleSearch = async (sku: string) => {
-    try {
-      const result = await searchProductsBySKU(sku.toUpperCase());
-      const product = result.find(
-        (x) => x.sku.toUpperCase() === sku.toUpperCase()
-      );
+    const result = await searchProductsBySKU(sku.toUpperCase());
+
+    const product = result.find(
+      (x) => x.sku.toUpperCase() === sku.toUpperCase()
+    );
+    if (product) {
       setSearchResult(product); // Set the search result in state
       navigate("/searchresult");
-      console.log("From App file");
-      console.log(searchResult);
-    } catch (error) {
-      console.error("Search error:", error);
-      // Handle errors, e.g., display an error message to the user
+    } else {
+      alert("SKU is not registered");
     }
+    console.log("From App file");
+    console.log(searchResult);
   };
 
   return (
