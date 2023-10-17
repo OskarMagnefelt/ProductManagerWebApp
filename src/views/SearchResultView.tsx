@@ -22,6 +22,8 @@ const SearchResultView = ({ searchResult }: any) => {
 
   const navigate = useNavigate();
 
+  const [productDeletedMessage, setProductDeletedMessage] = useState(false);
+
   const handleEditClick = () => {
     navigate("/editproduct");
   };
@@ -29,8 +31,11 @@ const SearchResultView = ({ searchResult }: any) => {
   const handleDeleteClick = (sku: string) => {
     deleteProductBySKU(sku)
       .then(() => {
-        console.log(`Product with ${sku} successfully deleted`);
-        navigate("/searchresultview");
+        setProductDeletedMessage(true);
+        setTimeout(() => {
+          setProductDeletedMessage(false);
+          navigate("/");
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error deleting product:", error);
@@ -97,6 +102,11 @@ const SearchResultView = ({ searchResult }: any) => {
             </Button>{" "}
           </CardContent>
         </Card>
+        {productDeletedMessage && (
+          <div style={{ color: colors.greenAccent[400], marginTop: "1rem" }}>
+            Product deleted...
+          </div>
+        )}
       </Box>
     </div>
   );
