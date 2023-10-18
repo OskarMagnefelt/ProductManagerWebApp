@@ -2,6 +2,7 @@ import { useTheme } from "@mui/material";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { tokens } from "../theme";
+import { addProductToCategoryRequest } from "../api/ProductCategories";
 
 interface ProductToCategoryForm {
   skuOfProduct: string;
@@ -24,11 +25,12 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
     formState: { errors },
   } = useForm<ProductToCategoryForm>();
 
-  const onSubmitHandler = (data: ProductToCategoryForm) => {
-    onSubmit(data);
-    // console.log(data);
+  const onSubmitHandler = async (data: ProductToCategoryForm) => {
+    const result = await addProductToCategoryRequest(data);
+    if (result) {
+      onSubmit(result);
+    }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <div>

@@ -7,7 +7,7 @@ import ProductsView from "./views/ProductsView";
 import ListCategoriesView from "./views/ListCategoriesView";
 import AddCategoryView from "./views/AddCategoryView";
 import AddProductView from "./views/AddProductView";
-import AddProductToCategory from "./views/AddProductToCategory";
+import AddProductToCategoryView from "./views/AddProductToCategoryView";
 import SearchResultView from "./views/SearchResultView";
 import { searchProductsBySKU } from "./api/Products";
 import { useState } from "react";
@@ -56,7 +56,7 @@ function App() {
               />
               <Route
                 path="/addproducttocategory"
-                element={<AddProductToCategory />}
+                element={<AddProductToCategoryView />}
               />
               <Route path="/listcategories" element={<ListCategoriesView />} />
             </Routes>

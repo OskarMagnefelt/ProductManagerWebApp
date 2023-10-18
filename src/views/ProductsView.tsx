@@ -1,13 +1,9 @@
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import {
-  deleteProductBySKU,
-  getProducts,
-  updateProductBySKU,
-} from "../api/Products";
+import { getProducts } from "../api/Products";
 
 const ProductsView = () => {
   const getRowId = (row: GridRowModel) => {
@@ -85,12 +81,7 @@ const ProductsView = () => {
           },
         }}
       >
-        <DataGrid
-          // checkboxSelection
-          rows={data}
-          columns={columns}
-          getRowId={getRowId}
-        />
+        <DataGrid rows={data} columns={columns} getRowId={getRowId} />
       </Box>
     </Box>
   );

@@ -19,7 +19,7 @@ export async function fetchProductCategories(): Promise<
 }
 
 // Function to associate a product with a category
-export async function addProductToCategory(
+export async function addProductToCategoryRequest(
   request: AddProductToCategoryDTO
 ): Promise<void> {
   try {
