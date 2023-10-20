@@ -19,6 +19,33 @@ export async function fetchProductCategories(): Promise<
 }
 
 // Function to associate a product with a category
+// export async function addProductToCategoryRequest(
+//   request: AddProductToCategoryDTO
+// ): Promise<void> {
+//   try {
+//     const response = await fetch(`${API_BASE_URL}/productcategories/add`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(request),
+//     });
+
+//     if (response.status === 409) {
+//       throw new Error("Product is already associated with the category");
+//     }
+
+//     if (!response.ok) {
+//       throw new Error("Network response was not ok");
+//     }
+//   } catch (error: any) {
+//     throw new Error(error.message);
+//   }
+// }
+
+// MED EXTRA FELMEDDELANDEN
+
+// Function to associate a product with a category
 export async function addProductToCategoryRequest(
   request: AddProductToCategoryDTO
 ): Promise<void> {
@@ -32,13 +59,15 @@ export async function addProductToCategoryRequest(
     });
 
     if (response.status === 409) {
-      throw new Error("Product is already associated with the category");
+      const responseText = await response.text();
+      throw new Error(`Conflict: ${responseText}`);
     }
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      const responseText = await response.text();
+      throw new Error(`Request failed: ${responseText}`);
     }
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error(`Error sending the request: ${error.message}`);
   }
 }

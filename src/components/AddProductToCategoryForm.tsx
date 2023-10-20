@@ -26,7 +26,7 @@ import { addProductToCategoryRequest } from "../api/ProductCategories";
 
 const AddProductToCategoryForm = () => {
   const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
+  const colors = tokens(theme.palette.mode);
 
   const [showProductInfo, setShowProductInfo] = useState(false);
 
@@ -162,7 +162,17 @@ const AddProductToCategoryForm = () => {
         </Select>
       </div>
 
-      <Button onClick={handleAddProductToCategory}>Add</Button>
+      {/* <Button onClick={handleAddProductToCategory}>Add</Button> */}
+
+      <button
+        onClick={handleAddProductToCategory}
+        style={{
+          backgroundColor: `${colors.greenAccent[400]} `,
+          marginTop: "1rem",
+        }}
+      >
+        Add product to category
+      </button>
     </Box>
   );
 };
