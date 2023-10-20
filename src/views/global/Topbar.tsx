@@ -63,12 +63,6 @@ const Topbar = ({ onSearch }: any) => {
         </IconButton>
 
         <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-        <IconButton>
           <PersonOutlinedIcon />
         </IconButton>
       </Box>
