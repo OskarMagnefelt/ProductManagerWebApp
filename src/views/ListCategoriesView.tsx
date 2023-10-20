@@ -37,7 +37,9 @@ const ListCategoriesView = () => {
               <h3>{`${category.categoryName} (${category.products.length})`}</h3>
               <ul>
                 {category.products.map((product) => (
-                  <li key={product.productId}>{product.productName}</li>
+                  <li key={product.productId}>
+                    {`${product.productName} ${product.productPrice} SEK`}
+                  </li>
                 ))}
               </ul>
             </li>

@@ -29,6 +29,8 @@ export interface Category {
 export interface GetProductInCategoryDto {
     productId: number;
     productName: string;
+    productPrice: number;
+
 }
   
 export interface GetProductCategoriesDto {
