@@ -6,6 +6,11 @@ export interface Product {
     image: string;
 }
 
+export interface ProductDto {
+    id: number; 
+    name: string;
+}
+
 export interface ProductInfoDto {
     id: number;
     name: string;

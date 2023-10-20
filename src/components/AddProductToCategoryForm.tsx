@@ -42,9 +42,22 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
   const [category, setCategory] = useState<Category | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
 
+  // Dessa useEffects användes för att förstå async await
+
   useEffect(() => {
     console.log("product:", product);
   }, [product]);
+
+  useEffect(() => {
+    console.log("category:", category);
+  }, [category]);
+
+  // Fetch categories when the component mounts
+  useEffect(() => {
+    fetchCategories()
+      .then((data) => setCategories(data))
+      .catch((error) => console.error("Error fetching categories: ", error));
+  }, []);
 
   const handleSearch = async () => {
     if (searchValue === "") return;
@@ -81,42 +94,6 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
       console.log("Selected category ID:", selectedCategoryId);
     }
   };
-
-  // Fetch categories when the component mounts
-  useEffect(() => {
-    fetchCategories()
-      .then((data) => setCategories(data))
-      .catch((error) => console.error("Error fetching categories: ", error));
-  }, []);
-
-  useEffect(() => {
-    console.log("category:", category);
-  }, [category]);
-
-  // const handleSubmit = async () => {
-  //   if (!product || !category) {
-  //     console.error("Product and category must be selected.");
-  //     alert("Product and category must be selected.");
-  //     return;
-  //   }
-
-  //   const request: AddProductToCategoryDTO = {
-  //     productId: product!.id,
-  //     categoryId: category!.id,
-  //   };
-
-  //   try {
-  //     await onSubmit(request);
-  //     // await addProductToCategoryRequest(request);
-
-  //     // Handle success, e.g., show a success message or navigate to a success page.
-  //     console.log("Product added to category successfully!");
-  //   } catch (error: any) {
-  //     // Handle errors, e.g., display an error message.
-  //     console.error("Error adding product to category:", error.message);
-  //     alert("This product is already added to this category");
-  //   }
-  // };
 
   const handleSubmit = async () => {
     if (!product || !category) {
@@ -169,7 +146,7 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
           sx={{
             backgroundColor: colors.primary[400],
             width: "250px",
-            marginTop: "1rem",
+            marginTop: "2rem",
           }}
         >
           <CardContent
@@ -212,7 +189,7 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
             }}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={category?.name} // Use the category ID directly
+            value={category?.name}
             label="Category"
             onChange={handleCategoryPick}
           >
