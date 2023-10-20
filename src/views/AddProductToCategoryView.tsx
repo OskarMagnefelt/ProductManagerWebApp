@@ -31,8 +31,13 @@ const AddProductToCategory = () => {
   return (
     <div>
       <Box m="20px">
-        <Header title="Add Category" subtitle="Add new categories" />
-        <AddProductToCategoryForm onSubmit={handleAddProductToCategory} />
+        <Header
+          title="Add Product To Category"
+          subtitle="Add products to categories"
+        />
+        <AddProductToCategoryForm
+        // onSubmit={handleAddProductToCategory}
+        />
         {productAddedToCategory && (
           <div style={{ color: colors.greenAccent[400], marginTop: "1rem" }}>
             Product added to category...

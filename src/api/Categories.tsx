@@ -3,13 +3,13 @@ import { Category, CategoryName } from "./Interfaces";
 const API_BASE_URL = "https://localhost:8000";
 
 // Function to fetch all categories
-export async function fetchCategories(): Promise<CategoryName[]> {
+export async function fetchCategories(): Promise<Category[]> {
   try {
     const response = await fetch(`${API_BASE_URL}/categories`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    const data: CategoryName[] = await response.json();
+    const data: Category[] = await response.json();
     return data;
   } catch (error: any) {
     throw new Error(error.message);

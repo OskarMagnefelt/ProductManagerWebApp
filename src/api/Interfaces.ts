@@ -4,7 +4,13 @@ export interface Product {
     description: string;
     price: number;
     image: string;
-  }
+}
+
+export interface ProductInfoDto {
+    id: number;
+    name: string;
+    sku: string;
+}
 
 export interface CategoryName {
     name: string;

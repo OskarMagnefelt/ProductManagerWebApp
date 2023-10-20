@@ -1,4 +1,4 @@
-import { Product } from "./Interfaces";
+import { Product, ProductInfoDto } from "./Interfaces";
 
 const API_BASE_URL = "https://localhost:8000";
 
@@ -79,4 +79,28 @@ export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
 
   const data = await response.json();
   return data;
+};
+
+// Get product information by ID
+export const getProductInfoBySKU = async (
+  sku: string
+): Promise<ProductInfoDto> => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/Products/api/products/${sku}`
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("Product not found");
+      }
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
 };
