@@ -3,8 +3,10 @@ import {
   Button,
   Card,
   CardContent,
+  FormControl,
   IconButton,
   InputBase,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -24,17 +26,20 @@ import SearchIcon from "@mui/icons-material/Search";
 import { fetchCategories } from "../api/Categories";
 import { addProductToCategoryRequest } from "../api/ProductCategories";
 
-const AddProductToCategoryForm = () => {
+interface AddProductToCategoryProps {
+  onSubmit: (data: AddProductToCategoryDTO) => void;
+}
+
+const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
+  onSubmit,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [showProductInfo, setShowProductInfo] = useState(false);
-
   const [searchValue, setSearchValue] = useState("");
-  // const [product, setProduct] = useState<ProductInfoDto | {}>({});
   const [product, setProduct] = useState<ProductInfoDto | null>(null);
-
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState<Category | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -46,6 +51,7 @@ const AddProductToCategoryForm = () => {
 
     try {
       const productFromApi = await getProductInfoBySKU(searchValue); // Use `await` here to wait for the promise to resolve
+
       setProduct(productFromApi);
       setShowProductInfo(true);
       setSearchValue("");
@@ -54,10 +60,13 @@ const AddProductToCategoryForm = () => {
       console.log("product:", product);
     } catch (error: any) {
       console.error("Error fetching product info:", error.message);
+
+      alert("Product not found");
+      setSearchValue("");
     }
   };
 
-  const handleCategoryPick = (event: SelectChangeEvent) => {
+  const handleCategoryPick = async (event: SelectChangeEvent) => {
     const selectedCategoryName = event.target.value as string;
     const selectedCategory = categories.find(
       (category) => category.name === selectedCategoryName
@@ -65,7 +74,9 @@ const AddProductToCategoryForm = () => {
 
     if (selectedCategory) {
       const selectedCategoryId = selectedCategory.id;
-      setCategory(selectedCategoryId);
+      await setCategory(selectedCategory);
+
+      console.log(`Category when selected: ${category}`);
 
       console.log("Selected category ID:", selectedCategoryId);
     }
@@ -82,26 +93,50 @@ const AddProductToCategoryForm = () => {
     console.log("category:", category);
   }, [category]);
 
-  const handleAddProductToCategory = async () => {
+  // const handleSubmit = async () => {
+  //   if (!product || !category) {
+  //     console.error("Product and category must be selected.");
+  //     alert("Product and category must be selected.");
+  //     return;
+  //   }
+
+  //   const request: AddProductToCategoryDTO = {
+  //     productId: product!.id,
+  //     categoryId: category!.id,
+  //   };
+
+  //   try {
+  //     await onSubmit(request);
+  //     // await addProductToCategoryRequest(request);
+
+  //     // Handle success, e.g., show a success message or navigate to a success page.
+  //     console.log("Product added to category successfully!");
+  //   } catch (error: any) {
+  //     // Handle errors, e.g., display an error message.
+  //     console.error("Error adding product to category:", error.message);
+  //     alert("This product is already added to this category");
+  //   }
+  // };
+
+  const handleSubmit = async () => {
     if (!product || !category) {
       console.error("Product and category must be selected.");
+      alert("Product and category must be selected.");
       return;
     }
 
-    // Create a request object with the product ID and category ID
     const request: AddProductToCategoryDTO = {
-      productId: product!.id, // Assuming product has an "id" property
-      categoryId: category, // Assuming category is already set as an ID
+      productId: product!.id,
+      categoryId: category!.id,
     };
 
     try {
       await addProductToCategoryRequest(request);
-
-      // Handle success, e.g., show a success message or navigate to a success page.
+      onSubmit(request);
       console.log("Product added to category successfully!");
     } catch (error: any) {
-      // Handle errors, e.g., display an error message.
       console.error("Error adding product to category:", error.message);
+      alert("This product is already added to this category");
     }
   };
 
@@ -129,11 +164,36 @@ const AddProductToCategoryForm = () => {
         </IconButton>
       </div>
 
-      {/* {showProductInfo && (
-        <Card>
-          <CardContent>Name: {product}</CardContent>
+      {showProductInfo && (
+        <Card
+          sx={{
+            backgroundColor: colors.primary[400],
+            width: "250px",
+            marginTop: "1rem",
+          }}
+        >
+          <CardContent
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <span style={{ color: colors.greenAccent[400] }}>Name:</span>{" "}
+            {product?.name}
+          </CardContent>
+          <CardContent
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <span style={{ color: colors.greenAccent[400] }}>SKU:</span>{" "}
+            {product?.sku}
+          </CardContent>
         </Card>
-      )} */}
+      )}
 
       <div
         style={{
@@ -142,30 +202,33 @@ const AddProductToCategoryForm = () => {
           flexDirection: "column",
         }}
       >
-        <label>Select category</label>
-        <Select
-          sx={{
-            width: "150px",
-            height: "43px",
-          }}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={category.toString()}
-          label="Category"
-          onChange={handleCategoryPick}
-        >
-          {categories.map((category) => (
-            <MenuItem key={category.id} value={category.name}>
-              {`${category.id}.  ${category.name}`}
-            </MenuItem>
-          ))}
-        </Select>
+        {/* <label>Select category</label> */}
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <Select
+            sx={{
+              width: "150px",
+              // height: "43px",
+            }}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={category?.name} // Use the category ID directly
+            label="Category"
+            onChange={handleCategoryPick}
+          >
+            {categories.map((category) => (
+              <MenuItem key={category.id} value={category.name}>
+                {`${category.id}.  ${category.name}`}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
 
       {/* <Button onClick={handleAddProductToCategory}>Add</Button> */}
 
       <button
-        onClick={handleAddProductToCategory}
+        onClick={handleSubmit}
         style={{
           backgroundColor: `${colors.greenAccent[400]} `,
           marginTop: "1rem",

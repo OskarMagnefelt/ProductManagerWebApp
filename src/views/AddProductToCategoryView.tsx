@@ -17,8 +17,7 @@ const AddProductToCategory = () => {
   const [productAddedToCategory, setProductAddedToCategory] = useState(false);
 
   const handleAddProductToCategory = (data: any) => {
-    // Handle the form submission here, for example, send the data to your API.
-    addProductToCategoryRequest(data);
+    // addProductToCategoryRequest(data);
 
     setProductAddedToCategory(true);
     setTimeout(() => {
@@ -35,9 +34,7 @@ const AddProductToCategory = () => {
           title="Add Product To Category"
           subtitle="Add products to categories"
         />
-        <AddProductToCategoryForm
-        // onSubmit={handleAddProductToCategory}
-        />
+        <AddProductToCategoryForm onSubmit={handleAddProductToCategory} />
         {productAddedToCategory && (
           <div style={{ color: colors.greenAccent[400], marginTop: "1rem" }}>
             Product added to category...

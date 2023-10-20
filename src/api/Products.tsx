@@ -81,7 +81,7 @@ export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
   return data;
 };
 
-// Get product information by ID
+// Get product information by SKU
 export const getProductInfoBySKU = async (
   sku: string
 ): Promise<ProductInfoDto> => {
