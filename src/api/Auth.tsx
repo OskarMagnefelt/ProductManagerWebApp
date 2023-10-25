@@ -2,7 +2,6 @@ import { LoginCredentials } from "./Interfaces";
 
 const API_BASE_URL = "https://localhost:8000";
 
-// api/auth.js (or any other relevant file in your "api" folder)
 export async function login(credentials: LoginCredentials) {
   try {
     const response = await fetch(`${API_BASE_URL}/auth`, {
@@ -14,18 +13,19 @@ export async function login(credentials: LoginCredentials) {
     });
 
     if (response.ok) {
-      // Authentication successful; handle the response
       const data = await response.json();
+      const token = data.token; // Assuming the server responds with a "token" field
+
       // Store the authentication token securely (e.g., in local storage)
+      localStorage.setItem("authToken", token);
+
       // Redirect to a protected route or perform other actions
       console.log("Login successful", data);
       return data;
     } else {
-      // Authentication failed; handle errors
       throw new Error("Invalid username or password");
     }
   } catch (error) {
-    // Handle network or other errors
     throw new Error("Network error. Please try again.");
   }
 }

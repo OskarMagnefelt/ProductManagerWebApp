@@ -3,14 +3,30 @@ import { Product, ProductInfoDto } from "./Interfaces";
 const API_BASE_URL = "https://localhost:8000";
 
 // Get all products
+// Get all products
 export const getProducts = () => {
-  return fetch(`${API_BASE_URL}/Products`).then((response) => {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
+  return fetch(`${API_BASE_URL}/Products`, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     return response.json();
   });
 };
+
+// Modify other API functions in a similar way to include the token in headers.
 
 // Add a new product
 export const addProduct = async (product: Product): Promise<Product> => {
