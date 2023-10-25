@@ -2,6 +2,14 @@ export interface LoginCredentials {
     username: string;
     password: string;
   }
+
+export  interface JwtClaims {
+    sub: string; // Subject
+    given_name: string; // First name
+    surname: string; // Last name
+    // Add other claims as needed
+ }
+
   
 export interface Product {
     name: string;
