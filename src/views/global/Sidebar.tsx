@@ -29,11 +29,20 @@ const Item = ({ title, to, icon, selected, setSelected }: any) => {
   );
 };
 
-const Sidebar = () => {
+interface SideBarProps {
+  setAuthenticationStatus: (status: boolean) => void;
+}
+
+const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("MainView");
+
+  const handleSignOut = () => {
+    setAuthenticationStatus(false); // Sign out by setting authentication status to false
+    // setSelected("Login"); // Select the "Login" item
+  };
 
   return (
     <Box
@@ -94,7 +103,7 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="List products"
-              to="/listproducts"
+              to="/"
               icon={<FormatListBulletedOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -127,13 +136,26 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Sign out"
-              to="/login"
+              // to="/"
+              // selected={selected}
+              // setSelected={setSelected}
+              onClick={handleSignOut}
+            /> */}
+
+            <MenuItem
+              // active={selected === title}
+              style={{
+                color: colors.grey[100],
+              }}
+              onClick={handleSignOut}
               icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            >
+              <Typography>Sign out</Typography>
+              <Link to={"/"} />
+            </MenuItem>
+            {/* <PersonOutlinedIcon onClick={handleSignOut} /> */}
           </Box>
         </Menu>
       </ProSidebar>

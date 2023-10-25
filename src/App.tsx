@@ -46,48 +46,42 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar></Sidebar>
-          <main className="content">
-            <Topbar onSearch={handleSearch} />
-            <Routes>
-              {/* Render the Login component if the user is not authenticated */}
-              {!isAuthenticated && (
-                <Route
-                  path="/login"
-                  element={
-                    <LoginView
-                      setAuthenticationStatus={setAuthenticationStatus}
+          {isAuthenticated ? (
+            <>
+              <Sidebar
+                setAuthenticationStatus={setAuthenticationStatus}
+              ></Sidebar>
+              <main className="content">
+                <Topbar onSearch={handleSearch} />
+                <Routes>
+                  <>
+                    <Route path="/" element={<ProductsView />} />
+                    <Route path="/addproduct" element={<AddProductView />} />
+                    <Route path="/addcategory" element={<AddCategoryView />} />
+                    <Route
+                      path="/searchresult"
+                      element={<SearchResultView searchResult={searchResult} />}
                     />
-                  }
-                />
-              )}
-
-              {/* Protect other routes by rendering them only if the user is authenticated */}
-              {isAuthenticated && (
-                <>
-                  <Route path="/listproducts" element={<ProductsView />} />
-                  <Route path="/addproduct" element={<AddProductView />} />
-                  <Route path="/addcategory" element={<AddCategoryView />} />
-                  <Route
-                    path="/searchresult"
-                    element={<SearchResultView searchResult={searchResult} />}
-                  />
-                  <Route
-                    path="/editproduct"
-                    element={<EditProductView searchResult={searchResult} />}
-                  />
-                  <Route
-                    path="/addproducttocategory"
-                    element={<AddProductToCategoryView />}
-                  />
-                  <Route
-                    path="/listcategories"
-                    element={<ListCategoriesView />}
-                  />
-                </>
-              )}
-            </Routes>
-          </main>
+                    <Route
+                      path="/editproduct"
+                      element={<EditProductView searchResult={searchResult} />}
+                    />
+                    <Route
+                      path="/addproducttocategory"
+                      element={<AddProductToCategoryView />}
+                    />
+                    <Route
+                      path="/listcategories"
+                      element={<ListCategoriesView />}
+                    />
+                  </>
+                  {/* )} */}
+                </Routes>
+              </main>
+            </>
+          ) : (
+            <LoginView setAuthenticationStatus={setAuthenticationStatus} />
+          )}
         </div>
         <Outlet />
       </ThemeProvider>
