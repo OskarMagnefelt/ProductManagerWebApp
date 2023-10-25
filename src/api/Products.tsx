@@ -1,4 +1,5 @@
 import { Product, ProductInfoDto } from "./Interfaces";
+import jwtDecode from "jwt-decode";
 
 const API_BASE_URL = "https://localhost:8000";
 
@@ -13,6 +14,21 @@ export const getProducts = () => {
     // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
+
+  // Your JWT token
+  const token = authToken;
+
+  // Decode the JWT
+  const decodedToken = jwtDecode(token);
+
+  // Access the payload data
+  console.log(
+    `Here is the decoded token from getProducts Api Method ${decodedToken}`
+  );
+
+  console.log(
+    `Here is the authToken token from getProducts Api Method ${authToken}`
+  );
 
   return fetch(`${API_BASE_URL}/Products`, {
     headers: {

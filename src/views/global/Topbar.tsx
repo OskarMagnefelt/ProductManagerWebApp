@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { ColorModeContext, tokens } from "../../theme";
 import InputBase from "@mui/material/InputBase";
@@ -6,12 +6,27 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import jwtDecode from "jwt-decode";
 
 const Topbar = ({ onSearch }: any) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = React.useContext(ColorModeContext);
   const [searchValue, setSearchValue] = useState("");
+  const [decodedToken, setDecodedToken] = useState<any | null>(null); // Initialize the state
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+
+    if (authToken) {
+      const decodedToken = jwtDecode(authToken);
+      setDecodedToken(decodedToken); // Set the decoded token in state
+      // console.log(
+      //   `Here is the decoded token from Topbar components useEffect ${decodedToken}`
+      // );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSearch = () => {
     if (searchValue === "") return;
@@ -45,24 +60,39 @@ const Topbar = ({ onSearch }: any) => {
         </IconButton>
       </Box>
 
-      {/* ICONS */}
-      <Box display="flex">
-        <IconButton
-          onClick={() => {
-            console.log("Button clicked");
-            colorMode.toggleColorMode();
-          }}
-        >
-          {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
-            <LightModeOutlinedIcon />
-          )}
-        </IconButton>
+      <Box display="flex" justifyContent="space-between">
+        {decodedToken && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: colors.greenAccent[300],
+            }}
+          >
+            {`Signed in as ${decodedToken.given_name} ${decodedToken.family_name}`}
+          </div>
+        )}
 
-        <IconButton>
-          <PersonOutlinedIcon />
-        </IconButton>
+        {/* ICONS */}
+        <Box display="flex">
+          <IconButton
+            onClick={() => {
+              console.log("Button clicked");
+              colorMode.toggleColorMode();
+            }}
+          >
+            {theme.palette.mode === "dark" ? (
+              <DarkModeOutlinedIcon />
+            ) : (
+              <LightModeOutlinedIcon />
+            )}
+          </IconButton>
+
+          <IconButton>
+            <PersonOutlinedIcon />
+          </IconButton>
+        </Box>
       </Box>
     </Box>
   );
