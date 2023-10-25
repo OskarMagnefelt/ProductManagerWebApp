@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { login } from "../api/Auth";
 
-const Login = () => {
+interface LoginViewProps {
+  setAuthenticationStatus: (status: boolean) => void;
+}
+
+const LoginView = ({ setAuthenticationStatus }: LoginViewProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null); // Updated error state
@@ -15,12 +19,13 @@ const Login = () => {
     };
 
     try {
-      const data = await login(credentials); // Use the login function
+      await login(credentials); // Use the login function
 
       // Authentication successful; handle the response
       // Store the authentication token securely (e.g., in local storage)
       // Redirect to a protected route or perform other actions
       //   console.log("Login successful", data);
+      setAuthenticationStatus(true);
     } catch (error: any) {
       // Handle errors
       setError(error.message);
@@ -63,4 +68,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginView;

@@ -93,9 +93,9 @@ const Sidebar = () => {
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
-              title="Home"
-              to="/"
-              icon={<HomeOutlinedIcon />}
+              title="List products"
+              to="/listproducts"
+              icon={<FormatListBulletedOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

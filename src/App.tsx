@@ -12,12 +12,18 @@ import SearchResultView from "./views/SearchResultView";
 import { searchProductsBySKU } from "./api/Products";
 import { useState } from "react";
 import EditProductView from "./views/EditProductView";
-import Login from "./views/Login";
+import Login from "./views/LoginView";
+import LoginView from "./views/LoginView";
 
 function App() {
   const [theme, colorMode] = useMode();
   const navigate = useNavigate();
   const [searchResult, setSearchResult] = useState<any>("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const setAuthenticationStatus = (status: boolean) => {
+    setIsAuthenticated(status);
+  };
 
   const handleSearch = async (sku: string) => {
     const result = await searchProductsBySKU(sku);
@@ -44,23 +50,42 @@ function App() {
           <main className="content">
             <Topbar onSearch={handleSearch} />
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<ProductsView />} />
-              <Route path="/addproduct" element={<AddProductView />} />
-              <Route path="/addcategory" element={<AddCategoryView />} />
-              <Route
-                path="/searchresult"
-                element={<SearchResultView searchResult={searchResult} />}
-              />
-              <Route
-                path="/editproduct"
-                element={<EditProductView searchResult={searchResult} />}
-              />
-              <Route
-                path="/addproducttocategory"
-                element={<AddProductToCategoryView />}
-              />
-              <Route path="/listcategories" element={<ListCategoriesView />} />
+              {/* Render the Login component if the user is not authenticated */}
+              {!isAuthenticated && (
+                <Route
+                  path="/login"
+                  element={
+                    <LoginView
+                      setAuthenticationStatus={setAuthenticationStatus}
+                    />
+                  }
+                />
+              )}
+
+              {/* Protect other routes by rendering them only if the user is authenticated */}
+              {isAuthenticated && (
+                <>
+                  <Route path="/listproducts" element={<ProductsView />} />
+                  <Route path="/addproduct" element={<AddProductView />} />
+                  <Route path="/addcategory" element={<AddCategoryView />} />
+                  <Route
+                    path="/searchresult"
+                    element={<SearchResultView searchResult={searchResult} />}
+                  />
+                  <Route
+                    path="/editproduct"
+                    element={<EditProductView searchResult={searchResult} />}
+                  />
+                  <Route
+                    path="/addproducttocategory"
+                    element={<AddProductToCategoryView />}
+                  />
+                  <Route
+                    path="/listcategories"
+                    element={<ListCategoriesView />}
+                  />
+                </>
+              )}
             </Routes>
           </main>
         </div>
