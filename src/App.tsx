@@ -12,6 +12,7 @@ import SearchResultView from "./views/SearchResultView";
 import { searchProductsBySKU } from "./api/Products";
 import { useState } from "react";
 import EditProductView from "./views/EditProductView";
+import Login from "./views/Login";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -43,6 +44,7 @@ function App() {
           <main className="content">
             <Topbar onSearch={handleSearch} />
             <Routes>
+              <Route path="/login" element={<Login />} />
               <Route path="/" element={<ProductsView />} />
               <Route path="/addproduct" element={<AddProductView />} />
               <Route path="/addcategory" element={<AddCategoryView />} />
