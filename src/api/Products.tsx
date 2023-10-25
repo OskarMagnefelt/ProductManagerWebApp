@@ -29,12 +29,23 @@ export const getProducts = () => {
 // Modify other API functions in a similar way to include the token in headers.
 
 // Add a new product
+// Add a new product
 export const addProduct = async (product: Product): Promise<Product> => {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
   try {
     const response = await fetch(`${API_BASE_URL}/Products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`, // Include the token in the headers
       },
       body: JSON.stringify(product),
     });
@@ -53,9 +64,22 @@ export const addProduct = async (product: Product): Promise<Product> => {
 
 // Delete product
 export const deleteProductBySKU = async (sku: string): Promise<void> => {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
   const response = await fetch(`${API_BASE_URL}/Products/${sku}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${authToken}`, // Include the token in the headers
+    },
   });
+
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error("Product not found");
@@ -69,13 +93,24 @@ export const updateProductBySKU = async (
   sku: string,
   updateProductRequest: Product
 ): Promise<void> => {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
   const response = await fetch(`${API_BASE_URL}/products/${sku}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`, // Include the token in the headers
     },
     body: JSON.stringify(updateProductRequest),
   });
+
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error("Product not found");
@@ -86,9 +121,25 @@ export const updateProductBySKU = async (
 
 // Search products by sku
 export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
   const response = await fetch(
-    `${API_BASE_URL}/Products?sku=${sku.toLowerCase()}`
+    `${API_BASE_URL}/Products?sku=${sku.toLowerCase()}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`, // Include the token in the headers
+      },
+    }
   );
+
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -101,9 +152,23 @@ export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
 export const getProductInfoBySKU = async (
   sku: string
 ): Promise<ProductInfoDto> => {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
   try {
     const response = await fetch(
-      `${API_BASE_URL}/Products/api/products/${sku}`
+      `${API_BASE_URL}/Products/api/products/${sku}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`, // Include the token in the headers
+        },
+      }
     );
 
     if (!response.ok) {

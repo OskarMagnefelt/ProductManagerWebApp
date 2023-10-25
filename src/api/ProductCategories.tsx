@@ -6,11 +6,26 @@ const API_BASE_URL = "https://localhost:8000";
 export async function fetchProductCategories(): Promise<
   GetProductCategoriesDto[]
 > {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
   try {
-    const response = await fetch(`${API_BASE_URL}/productcategories`);
+    const response = await fetch(`${API_BASE_URL}/productcategories`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`, // Include the token in the headers
+      },
+    });
+
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
+
     const data: GetProductCategoriesDto[] = await response.json();
     return data;
   } catch (error: any) {
@@ -22,11 +37,21 @@ export async function fetchProductCategories(): Promise<
 export async function addProductToCategoryRequest(
   request: AddProductToCategoryDTO
 ): Promise<void> {
+  // Retrieve the authentication token from localStorage
+  const authToken = localStorage.getItem("authToken");
+
+  // Check if the token is available
+  if (!authToken) {
+    // Handle the case where the token is missing or expired
+    throw new Error("Authentication token is missing or expired");
+  }
+
   try {
     const response = await fetch(`${API_BASE_URL}/productcategories/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`, // Include the token in the headers
       },
       body: JSON.stringify(request),
     });
