@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import ControlPointDuplicateOutlinedIcon from "@mui/icons-material/ControlPointDuplicateOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import jwtDecode from "jwt-decode";
 
 const Item = ({ title, to, icon, selected, setSelected }: any) => {
   const theme = useTheme();
@@ -30,6 +31,7 @@ const Item = ({ title, to, icon, selected, setSelected }: any) => {
 
 interface SideBarProps {
   setAuthenticationStatus: (status: boolean) => void;
+  // userRole: string;
 }
 
 const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
@@ -37,10 +39,21 @@ const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("MainView");
+  const [decodedToken, setDecodedToken] = useState<any | null>(null);
 
   const handleSignOut = () => {
     setAuthenticationStatus(false);
   };
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+
+    if (authToken) {
+      const decodedToken = jwtDecode(authToken);
+      setDecodedToken(decodedToken);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box
@@ -97,55 +110,73 @@ const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
               ></Box>
             </Box>
           )}
-
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="List products"
-              to="/"
-              icon={<FormatListBulletedOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Add new product"
-              to="/addproduct"
-              icon={<AddCircleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Add new category"
-              to="/addcategory"
-              icon={<AddCircleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Add product to category"
-              to="/addproducttocategory"
-              icon={<ControlPointDuplicateOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="List categories"
-              to="/listcategories"
-              icon={<FormatListBulletedOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <MenuItem
-              // active={selected === title}
-              style={{
-                color: colors.grey[100],
-              }}
-              onClick={handleSignOut}
-              icon={<PersonOutlinedIcon />}
-            >
-              <Typography>Sign out</Typography>
-              <Link to={"/"} />
-            </MenuItem>
-          </Box>
+          {decodedToken && decodedToken.role === "Admin" ? (
+            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+              <Item
+                title="List products"
+                to="/"
+                icon={<FormatListBulletedOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Add new product"
+                to="/addproduct"
+                icon={<AddCircleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Add new category"
+                to="/addcategory"
+                icon={<AddCircleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Add product to category"
+                to="/addproducttocategory"
+                icon={<ControlPointDuplicateOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="List categories"
+                to="/listcategories"
+                icon={<FormatListBulletedOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <MenuItem
+                // active={selected === title}
+                style={{
+                  color: colors.grey[100],
+                }}
+                onClick={handleSignOut}
+                icon={<PersonOutlinedIcon />}
+              >
+                <Typography>Sign out</Typography>
+                <Link to={"/"} />
+              </MenuItem>
+            </Box>
+          ) : (
+            <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+              <Item
+                title="List products"
+                to="/"
+                icon={<FormatListBulletedOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="List categories"
+                to="/listcategories"
+                icon={<FormatListBulletedOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Box>
+          )}
         </Menu>
       </ProSidebar>
     </Box>

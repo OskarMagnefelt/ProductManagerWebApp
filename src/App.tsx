@@ -19,9 +19,11 @@ function App() {
   const navigate = useNavigate();
   const [searchResult, setSearchResult] = useState<any>("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [userRole, setUserRole] = useState("");
 
   const setAuthenticationStatus = (status: boolean) => {
     setIsAuthenticated(status);
+    // setUserRole(role);
   };
 
   const handleSearch = async (sku: string) => {
@@ -49,6 +51,7 @@ function App() {
             <>
               <Sidebar
                 setAuthenticationStatus={setAuthenticationStatus}
+                // userRole={userRole}
               ></Sidebar>
               <main className="content">
                 <Topbar onSearch={handleSearch} />
