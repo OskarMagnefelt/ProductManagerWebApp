@@ -1,7 +1,7 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./views/global/Topbar";
 import { ColorModeContext, useMode } from "./theme";
-import { Route, Routes, useNavigate, Outlet } from "react-router-dom"; // Import useNavigate and Outlet
+import { Route, Routes, useNavigate, Outlet } from "react-router-dom";
 import Sidebar from "./views/global/Sidebar";
 import ProductsView from "./views/ProductsView";
 import ListCategoriesView from "./views/ListCategoriesView";
@@ -12,7 +12,6 @@ import SearchResultView from "./views/SearchResultView";
 import { searchProductsBySKU } from "./api/Products";
 import { useState } from "react";
 import EditProductView from "./views/EditProductView";
-import Login from "./views/LoginView";
 import LoginView from "./views/LoginView";
 
 function App() {
@@ -75,7 +74,6 @@ function App() {
                       element={<ListCategoriesView />}
                     />
                   </>
-                  {/* )} */}
                 </Routes>
               </main>
             </>

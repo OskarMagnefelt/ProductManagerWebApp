@@ -13,17 +13,14 @@ const Topbar = ({ onSearch }: any) => {
   const colors = tokens(theme.palette.mode);
   const colorMode = React.useContext(ColorModeContext);
   const [searchValue, setSearchValue] = useState("");
-  const [decodedToken, setDecodedToken] = useState<any | null>(null); // Initialize the state
+  const [decodedToken, setDecodedToken] = useState<any | null>(null);
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
 
     if (authToken) {
       const decodedToken = jwtDecode(authToken);
-      setDecodedToken(decodedToken); // Set the decoded token in state
-      // console.log(
-      //   `Here is the decoded token from Topbar components useEffect ${decodedToken}`
-      // );
+      setDecodedToken(decodedToken);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

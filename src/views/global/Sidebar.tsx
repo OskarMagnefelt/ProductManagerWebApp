@@ -4,7 +4,6 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import ControlPointDuplicateOutlinedIcon from "@mui/icons-material/ControlPointDuplicateOutlined";
@@ -40,8 +39,7 @@ const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
   const [selected, setSelected] = useState("MainView");
 
   const handleSignOut = () => {
-    setAuthenticationStatus(false); // Sign out by setting authentication status to false
-    // setSelected("Login"); // Select the "Login" item
+    setAuthenticationStatus(false);
   };
 
   return (
@@ -136,14 +134,6 @@ const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
               selected={selected}
               setSelected={setSelected}
             />
-            {/* <Item
-              title="Sign out"
-              // to="/"
-              // selected={selected}
-              // setSelected={setSelected}
-              onClick={handleSignOut}
-            /> */}
-
             <MenuItem
               // active={selected === title}
               style={{
@@ -155,7 +145,6 @@ const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
               <Typography>Sign out</Typography>
               <Link to={"/"} />
             </MenuItem>
-            {/* <PersonOutlinedIcon onClick={handleSignOut} /> */}
           </Box>
         </Menu>
       </ProSidebar>

@@ -1,9 +1,7 @@
 import { Product, ProductInfoDto } from "./Interfaces";
-import jwtDecode from "jwt-decode";
 
 const API_BASE_URL = "https://localhost:8000";
 
-// Get all products
 // Get all products
 export const getProducts = () => {
   // Retrieve the authentication token from localStorage
@@ -14,21 +12,6 @@ export const getProducts = () => {
     // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
-
-  // Your JWT token
-  const token = authToken;
-
-  // Decode the JWT
-  const decodedToken = jwtDecode(token);
-
-  // Access the payload data
-  console.log(
-    `Here is the decoded token from getProducts Api Method ${decodedToken}`
-  );
-
-  console.log(
-    `Here is the authToken token from getProducts Api Method ${authToken}`
-  );
 
   return fetch(`${API_BASE_URL}/Products`, {
     headers: {
@@ -42,17 +25,11 @@ export const getProducts = () => {
   });
 };
 
-// Modify other API functions in a similar way to include the token in headers.
-
-// Add a new product
 // Add a new product
 export const addProduct = async (product: Product): Promise<Product> => {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
@@ -61,7 +38,7 @@ export const addProduct = async (product: Product): Promise<Product> => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`, // Include the token in the headers
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify(product),
     });
@@ -80,19 +57,16 @@ export const addProduct = async (product: Product): Promise<Product> => {
 
 // Delete product
 export const deleteProductBySKU = async (sku: string): Promise<void> => {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
   const response = await fetch(`${API_BASE_URL}/Products/${sku}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${authToken}`, // Include the token in the headers
+      Authorization: `Bearer ${authToken}`,
     },
   });
 
@@ -109,12 +83,9 @@ export const updateProductBySKU = async (
   sku: string,
   updateProductRequest: Product
 ): Promise<void> => {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
@@ -122,7 +93,7 @@ export const updateProductBySKU = async (
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${authToken}`, // Include the token in the headers
+      Authorization: `Bearer ${authToken}`,
     },
     body: JSON.stringify(updateProductRequest),
   });
@@ -137,12 +108,9 @@ export const updateProductBySKU = async (
 
 // Search products by sku
 export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
@@ -151,7 +119,7 @@ export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`, // Include the token in the headers
+        Authorization: `Bearer ${authToken}`,
       },
     }
   );
@@ -168,12 +136,9 @@ export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
 export const getProductInfoBySKU = async (
   sku: string
 ): Promise<ProductInfoDto> => {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
@@ -182,7 +147,7 @@ export const getProductInfoBySKU = async (
       `${API_BASE_URL}/Products/api/products/${sku}`,
       {
         headers: {
-          Authorization: `Bearer ${authToken}`, // Include the token in the headers
+          Authorization: `Bearer ${authToken}`,
         },
       }
     );

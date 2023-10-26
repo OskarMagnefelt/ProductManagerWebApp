@@ -1,14 +1,13 @@
 export interface LoginCredentials {
     username: string;
     password: string;
-  }
+}
 
 export  interface JwtClaims {
-    sub: string; // Subject
-    given_name: string; // First name
-    surname: string; // Last name
-    // Add other claims as needed
- }
+    sub: string; 
+    given_name: string; 
+    surname: string; 
+}
 
   
 export interface Product {

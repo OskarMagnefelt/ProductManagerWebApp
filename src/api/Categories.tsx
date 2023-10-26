@@ -4,19 +4,16 @@ const API_BASE_URL = "https://localhost:8000";
 
 // Function to fetch all categories
 export async function fetchCategories(): Promise<Category[]> {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
   try {
     const response = await fetch(`${API_BASE_URL}/categories`, {
       headers: {
-        Authorization: `Bearer ${authToken}`, // Include the token in the headers
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -33,19 +30,16 @@ export async function fetchCategories(): Promise<Category[]> {
 
 // Function to fetch a category by ID
 export async function fetchCategoryById(id: number): Promise<Category | null> {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
   try {
     const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
       headers: {
-        Authorization: `Bearer ${authToken}`, // Include the token in the headers
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -68,12 +62,9 @@ export async function fetchCategoryById(id: number): Promise<Category | null> {
 export async function addCategory(
   request: CategoryName
 ): Promise<Category | null> {
-  // Retrieve the authentication token from localStorage
   const authToken = localStorage.getItem("authToken");
 
-  // Check if the token is available
   if (!authToken) {
-    // Handle the case where the token is missing or expired
     throw new Error("Authentication token is missing or expired");
   }
 
@@ -82,7 +73,7 @@ export async function addCategory(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`, // Include the token in the headers
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify(request),
     });
