@@ -9,7 +9,6 @@ export  interface JwtClaims {
     surname: string; 
 }
 
-  
 export interface Product {
     name: string;
     sku: string;
@@ -21,12 +20,6 @@ export interface Product {
 export interface ProductDto {
     id: number; 
     name: string;
-}
-
-export interface ProductInfoDto {
-    id: number;
-    name: string;
-    sku: string;
 }
 
 export interface CategoryName {
@@ -53,5 +46,5 @@ export interface GetProductCategoriesDto {
 
 export interface AddProductToCategoryDTO {
     categoryId: number;
-    productId: number;
+    productSKU: string;
 }

@@ -1,4 +1,4 @@
-import { Product, ProductInfoDto } from "./Interfaces";
+import { Product } from "./Interfaces";
 
 const API_BASE_URL = "https://localhost:8000";
 
@@ -130,36 +130,4 @@ export const searchProductsBySKU = async (sku: string): Promise<Product[]> => {
 
   const data = await response.json();
   return data;
-};
-
-// Get product information by SKU
-export const getProductInfoBySKU = async (
-  sku: string
-): Promise<ProductInfoDto> => {
-  const authToken = localStorage.getItem("authToken");
-
-  if (!authToken) {
-    throw new Error("Authentication token is missing or expired");
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/Products/getinfo/${sku}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error("Product not found");
-      }
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error:", error);
-    throw error;
-  }
 };

@@ -14,14 +14,8 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { tokens } from "../theme";
-import {
-  AddProductToCategoryDTO,
-  Category,
-  Product,
-  ProductInfoDto,
-} from "../api/Interfaces";
-import { getProductInfoBySKU, updateProductBySKU } from "../api/Products";
-import { useNavigate } from "react-router-dom";
+import { AddProductToCategoryDTO, Category, Product } from "../api/Interfaces";
+import { searchProductsBySKU } from "../api/Products";
 import SearchIcon from "@mui/icons-material/Search";
 import { fetchCategories } from "../api/Categories";
 import { addProductToCategoryRequest } from "../api/ProductCategories";
@@ -38,21 +32,10 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
 
   const [showProductInfo, setShowProductInfo] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [product, setProduct] = useState<ProductInfoDto | null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [category, setCategory] = useState<Category | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
 
-  // Dessa useEffects användes för att förstå async await
-
-  useEffect(() => {
-    console.log("product:", product);
-  }, [product]);
-
-  useEffect(() => {
-    console.log("category:", category);
-  }, [category]);
-
-  // Fetch categories when the component mounts
   useEffect(() => {
     fetchCategories()
       .then((data) => setCategories(data))
@@ -63,9 +46,16 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
     if (searchValue === "") return;
 
     try {
-      const productFromApi = await getProductInfoBySKU(searchValue); // Use `await` here to wait for the promise to resolve
+      const productArrayFromApi = await searchProductsBySKU(searchValue); // Use `await` here to wait for the promise to resolve
 
-      setProduct(productFromApi);
+      let productFromApi: any = productArrayFromApi.find(
+        (x) => x.sku === searchValue
+      );
+
+      if (productFromApi) {
+        setProduct(productFromApi);
+        console.log(productFromApi);
+      }
       setShowProductInfo(true);
       setSearchValue("");
 
@@ -103,7 +93,7 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
     }
 
     const request: AddProductToCategoryDTO = {
-      productId: product!.id,
+      productSKU: product!.sku,
       categoryId: category!.id,
     };
 
@@ -204,8 +194,6 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
           </Select>
         </FormControl>
       </div>
-
-      {/* <Button onClick={handleAddProductToCategory}>Add</Button> */}
 
       <button
         onClick={handleSubmit}

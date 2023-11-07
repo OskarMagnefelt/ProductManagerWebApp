@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Input,
-  TextField,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Card, CardContent, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import Header from "../components/Header";
-import AddCategoryForm from "../components/AddCategoryForm";
-import AddProductToCategoryForm from "../components/AddProductToCategoryForm";
-import { deleteProductBySKU, updateProductBySKU } from "../api/Products";
+import { deleteProductBySKU } from "../api/Products";
 import { useNavigate } from "react-router-dom";
-import { Product } from "../api/Interfaces";
 import jwtDecode from "jwt-decode";
 
 const SearchResultView = ({ searchResult }: any) => {
