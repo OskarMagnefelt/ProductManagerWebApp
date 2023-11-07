@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -15,14 +15,25 @@ import AddProductToCategoryForm from "../components/AddProductToCategoryForm";
 import { deleteProductBySKU, updateProductBySKU } from "../api/Products";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../api/Interfaces";
+import jwtDecode from "jwt-decode";
 
 const SearchResultView = ({ searchResult }: any) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [decodedToken, setDecodedToken] = useState<any | null>(null);
+  const [productDeletedMessage, setProductDeletedMessage] = useState(false);
 
   const navigate = useNavigate();
 
-  const [productDeletedMessage, setProductDeletedMessage] = useState(false);
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+
+    if (authToken) {
+      const decodedToken = jwtDecode(authToken);
+      setDecodedToken(decodedToken);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEditClick = () => {
     navigate("/editproduct");
@@ -74,33 +85,35 @@ const SearchResultView = ({ searchResult }: any) => {
             {searchResult.price}
           </CardContent>
 
-          <CardContent
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-              paddingBottom: "16px",
-            }}
-          >
-            <Button
-              variant="contained"
-              onClick={() => handleEditClick()}
+          {decodedToken && decodedToken.role === "Admin" && (
+            <CardContent
               style={{
-                backgroundColor: colors.greenAccent[600],
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+                paddingBottom: "16px",
               }}
             >
-              Edit
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => handleDeleteClick(searchResult.sku)}
-              style={{
-                backgroundColor: colors.redAccent[500],
-              }}
-            >
-              Delete
-            </Button>{" "}
-          </CardContent>
+              <Button
+                variant="contained"
+                onClick={() => handleEditClick()}
+                style={{
+                  backgroundColor: colors.greenAccent[600],
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleDeleteClick(searchResult.sku)}
+                style={{
+                  backgroundColor: colors.redAccent[500],
+                }}
+              >
+                Delete
+              </Button>{" "}
+            </CardContent>
+          )}
         </Card>
         {productDeletedMessage && (
           <div style={{ color: colors.greenAccent[400], marginTop: "1rem" }}>

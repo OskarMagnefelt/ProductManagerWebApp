@@ -112,7 +112,10 @@ const AddProductToCategoryForm: React.FC<AddProductToCategoryProps> = ({
       onSubmit(request);
       console.log("Product added to category successfully!");
     } catch (error: any) {
-      console.error("Error adding product to category:", error.message);
+      console.error(
+        "This product is already added to this category",
+        error.message
+      );
       alert("This product is already added to this category");
     }
   };

@@ -175,6 +175,17 @@ const Sidebar = ({ setAuthenticationStatus }: SideBarProps) => {
                 selected={selected}
                 setSelected={setSelected}
               />
+              <MenuItem
+                // active={selected === title}
+                style={{
+                  color: colors.grey[100],
+                }}
+                onClick={handleSignOut}
+                icon={<PersonOutlinedIcon />}
+              >
+                <Typography>Sign out</Typography>
+                <Link to={"/"} />
+              </MenuItem>
             </Box>
           )}
         </Menu>

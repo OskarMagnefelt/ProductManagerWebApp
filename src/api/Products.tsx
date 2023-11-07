@@ -143,14 +143,11 @@ export const getProductInfoBySKU = async (
   }
 
   try {
-    const response = await fetch(
-      `${API_BASE_URL}/Products/api/products/${sku}`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      }
-    );
+    const response = await fetch(`${API_BASE_URL}/Products/getinfo/${sku}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
 
     if (!response.ok) {
       if (response.status === 404) {

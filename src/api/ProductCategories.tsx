@@ -41,7 +41,7 @@ export async function addProductToCategoryRequest(
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/productcategories/add`, {
+    const response = await fetch(`${API_BASE_URL}/productcategories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
